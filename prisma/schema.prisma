@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Source{
+  SCHOLAR
+  SCOPUS
+}
+
+enum Role {
+  USER
+  ADMIN
+  GOD
+}
+
+
+
+model User{
+  id                  Int               @id @default(autoincrement())
+  username            String            @unique
+  password            String
+  role                Role              @default(USER)
+  departament         UserOnDepartament[]
+}
+
+model Departament{
+  id                  Int               @id @default(autoincrement())
+  name                String
+  description         String
+  users               UserOnDepartament[]
+  lecturers           Lecturer[]
+}
+
+model UserOnDepartament {
+  user                User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId              Int 
+  departament         Departament       @relation(fields: [departamentId], references: [id], onDelete: Cascade)
+  departamentId       Int 
+
+  @@id([userId, departamentId])
+}
+
+model Lecturer{
+  id                  Int               @id @default(autoincrement())
+  name                String
+  surname             String
+  departament         Departament       @relation(fields: [departamentId], references: [id], onDelete: Cascade)
+  departamentId       Int
+  sceintificDBData    ScientificDBData[]         
+}
+
+model ScientificDBData{
+  id                  String            @id
+  source              Source
+  authorId            Int               
+  author              Lecturer          @relation(fields: [authorId], references: [id], onDelete: Cascade)
+}

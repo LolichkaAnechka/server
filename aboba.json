@@ -1,0 +1,23 @@
+{
+	"id": 25,
+	"name": "IPZE",
+	"description": "dsadsad",
+	"users": [
+		{
+			"userId": 1,
+			"departamentId": 25,
+			"user": { "id": 1, "username": "AbobaAbobenko", "role": "ADMIN" }
+		},
+		{
+			"userId": 2,
+			"departamentId": 25,
+			"user": { "id": 2, "username": "fewfewf", "role": "USER" }
+		},
+		{
+			"userId": 3,
+			"departamentId": 25,
+			"user": { "id": 3, "username": "ewfewfefw", "role": "USER" }
+		}
+	],
+	"lecturers": []
+}
